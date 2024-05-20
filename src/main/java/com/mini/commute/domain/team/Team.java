@@ -1,6 +1,10 @@
 package com.mini.commute.domain.team;
 
+import com.mini.commute.domain.employee.Employee;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -9,11 +13,19 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50, name ="name")
     private String name;
+
+
+    @OneToMany(mappedBy = "team")
+    private List<Employee> employees = new ArrayList<Employee>();
 
     protected Team() {
 
+    }
+
+    public Team(Long teamId) {
+        this.id = teamId;
     }
 
     public Team(String name) throws IllegalAccessException {
