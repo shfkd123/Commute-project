@@ -1,4 +1,4 @@
-package com.mini.commute.dto.team;
+package com.mini.commute.dto.team.request;
 
 public class TeamCreateRequest {
 
