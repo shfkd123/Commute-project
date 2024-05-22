@@ -1,4 +1,4 @@
-package com.mini.commute.dto.employee;
+package com.mini.commute.dto.employee.request;
 
 import java.time.LocalDate;
 

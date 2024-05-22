@@ -6,9 +6,12 @@ import com.mini.commute.domain.role.Role;
 import com.mini.commute.domain.role.RoleRepository;
 import com.mini.commute.domain.team.Team;
 import com.mini.commute.domain.team.TeamRepository;
-import com.mini.commute.dto.employee.EmployeeCreateRequest;
+import com.mini.commute.dto.employee.request.EmployeeCreateRequest;
+import com.mini.commute.dto.employee.response.EmployeeListInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class EmployeeService {
@@ -33,6 +36,11 @@ public class EmployeeService {
                 .orElseThrow(() -> new IllegalArgumentException("직급을 찾을 수 없습니다."));
 
         employeeRepository.save(new Employee(team, role, request.getName(), request.getWorkStartDate(), request.getBirthday()));
+    }
+
+    @Transactional
+    public List<EmployeeListInterface> getEmployeeList(){
+        return employeeRepository.findAllTeam();
     }
 
 }
