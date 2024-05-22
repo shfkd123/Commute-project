@@ -1,10 +1,13 @@
 package com.mini.commute.domain.employee;
 
+import com.mini.commute.domain.employee.attendance.Attendance;
 import com.mini.commute.domain.role.Role;
 import com.mini.commute.domain.team.Team;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -20,6 +23,9 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Attendance> attendances = new ArrayList<Attendance>();
 
     @Column(nullable = false, length = 30, name ="name")
     private String name;
