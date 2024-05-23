@@ -1,15 +1,19 @@
 package com.mini.commute.service.employee.attendance;
 
-import com.mini.commute.domain.employee.attendance.Attendance;
-import com.mini.commute.domain.employee.attendance.AttendanceRepository;
 import com.mini.commute.domain.employee.Employee;
 import com.mini.commute.domain.employee.EmployeeRepository;
+import com.mini.commute.domain.employee.attendance.Attendance;
+import com.mini.commute.domain.employee.attendance.AttendanceRepository;
 import com.mini.commute.dto.employee.attendace.request.AttendanceCreateRequest;
+import com.mini.commute.dto.employee.attendace.response.AttendanceSumListInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -72,5 +76,21 @@ public class AttendanceService {
         }else {
             throw new IllegalAccessException("금일 출근 기록이 존재하지 않습니다. \n 인사팀에 문의 바랍니다.");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> getAttendanceList(Long employeeId, String date) {
+        List<AttendanceSumListInterface> att = attendanceRepository.attendanceList(employeeId, date);
+
+        int sum = 0;
+        for (AttendanceSumListInterface detail : att) {
+            sum += Integer.parseInt(detail.getWorkingMinutes());
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("detail", att);
+        response.put("sum", sum);
+
+        return response;
     }
 }
